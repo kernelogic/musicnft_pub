@@ -43,6 +43,12 @@ router.post('/album/create', async (ctx) => {
 
 router.post('/album/update', async (ctx) => {
    const { ...params } = ctx.request.body;
+   let authorization = ctx.request.headers.authorization;
+   let { data } = util.decoded(authorization)
+   if (data.userId != params.userId) {
+      ctx.body = util.fail('You can only update your own album.', util.CODE.PARAM_ERROR);
+      return;
+   }
    try {
       await albumSchema.findByIdAndUpdate(params._id, params);
       ctx.body = util.success('', 'Album update successfully');
@@ -53,6 +59,12 @@ router.post('/album/update', async (ctx) => {
 
 router.post('/album/remove', async (ctx) => {
    const { ...params } = ctx.request.body;
+   let authorization = ctx.request.headers.authorization;
+   let { data } = util.decoded(authorization)
+   if (data.userId != params.userId) {
+      ctx.body = util.fail('You can only delete your own album.', util.CODE.PARAM_ERROR);
+      return;
+   }
    try {
       await albumSchema.findByIdAndRemove(params._id);
       ctx.body = util.success('', 'Album remove successfully');
@@ -99,6 +111,12 @@ router.post('/album/song/create', async (ctx) => {
 
 router.post('/album/song/update', async (ctx) => {
    const { ...params } = ctx.request.body;
+   let authorization = ctx.request.headers.authorization;
+   let { data } = util.decoded(authorization)
+   if (data.userId != params.userId) {
+      ctx.body = util.fail('You can only update your own song.', util.CODE.PARAM_ERROR);
+      return;
+   }
    try {
       if (params.status == 'publish' && !params.ipfsCID) {
          try {
@@ -122,7 +140,8 @@ router.post('/album/song/update', async (ctx) => {
 
       await songSchema.findByIdAndUpdate(params._id, params);
       updateAlbumStatus(params.albumId);
-      ctx.body = util.success('', 'Song update successfully');
+      const song = await songSchema.findById(params._id);
+      ctx.body = util.success(song, 'Song update successfully');
    } catch (error) {
       ctx.body = util.fail(error.stack)
    }
@@ -130,6 +149,12 @@ router.post('/album/song/update', async (ctx) => {
 
 router.post('/album/song/remove', async (ctx) => {
    const song = ctx.request.body;
+   let authorization = ctx.request.headers.authorization;
+   let { data } = util.decoded(authorization)
+   if (data.userId != song.userId) {
+      ctx.body = util.fail('You can only delete your own song.', util.CODE.PARAM_ERROR);
+      return;
+   }
    try {
       await songSchema.findByIdAndRemove(song._id);
       fs.promises.unlink(song.songPath);

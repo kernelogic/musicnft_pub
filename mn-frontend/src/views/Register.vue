@@ -30,7 +30,7 @@
         <el-form-item>
           <el-button type="primary" class="btn-register" @click="register">Register</el-button>
           <el-image class="btn-register-google" @click="signInWithGoogle" :src="googleImg" fit="contain"></el-image>
-          <el-image class="btn-register-facebook" @click="signInWithFacebook" :src="googleImg" fit="contain"></el-image>
+          <!-- <el-image class="btn-register-facebook" @click="signInWithFacebook" :src="googleImg" fit="contain"></el-image> -->
           <router-link to="/login" class="link-login">Already have an account? Login</router-link>
         </el-form-item>
       </el-form>

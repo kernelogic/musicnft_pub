@@ -7,6 +7,7 @@ router.prefix('/welcome')
 
 router.post('/albums/get', async (ctx) => {
    const { ...params } = ctx.request.body;
+   params.status = 'publish';
    const res = await albumSchema.find(params);
    ctx.body = util.success(res);
 })
@@ -19,7 +20,8 @@ router.post('/album/get', async (ctx) => {
 
 router.post('/album/song/get', async (ctx) => {
    const { ...params } = ctx.request.body;
-   const songs = await songSchema.find({ albumId: params.albumId });
+   params.status = 'publish';
+   const songs = await songSchema.find(params);
    ctx.body = util.success(songs)
 })
 

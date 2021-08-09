@@ -118,7 +118,9 @@ export default {
       this.albumForm = await this.$api.getWelcomeAlbum({albumId: this.$route.query.albumId})
     },
     async getWelcomeAlbumSong() {
-      this.songArray = await this.$api.getWelcomeAlbumSong({albumId: this.$route.query.albumId})
+      this.songArray = await this.$api.getWelcomeAlbumSong({
+        albumId: this.$route.query.albumId
+      })
     },
   },
 };

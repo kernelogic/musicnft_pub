@@ -359,7 +359,9 @@ export default {
     },
     onSongPublish(song) {
       song.status = 'publish';
-      this.$api.updateAlbumSong(song).then(() => {
+      this.$api.updateAlbumSong(song).then((_song) => {
+        song.ipfsCID = _song.ipfsCID;
+        song.status = _song.status;
         this.$message.success("Publish successfully");
       });
     },

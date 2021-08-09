@@ -21,13 +21,17 @@ The whole system has the following dependencies:
 
 ## Deployment
 1. Make sure MongoDB and IPFS daemon are running.
-2. Run `yarn install` (or `npm install`) inside both mn-frontend and mn-server folder.
-3. Edit the `.env` file in mn-frontend for your planned mn-server URL prefix as well as Firebase credentials. The default port for mn-frontend is 8088.
-4. Run `yarn install` in mn-frontend to install nodejs dependencies.
-5. Run `yarn dev` in mn-frontend to start the frontend application.
-6. Edit the `.env` file in mn-server for your MongoDB and IPFS connection information. The default port for mn-server is 3000.
-7. Run `yarn install` in mn-server to install nodejs dependencies.
-8. Run `yarn dev` in mn-server to start the backend application.
+2. Run these one time: in mongo shell 
+   1. `use musicnft` to switch/create the mongodb database
+   2. `db.counters.insertOne({_id:"userId",sequence_value:1000001})` to create a sequencing table for users
+3. Run `yarn install` (or `npm install`) inside both mn-frontend and mn-server folder.
+4. Edit the `.env` file in mn-frontend for your planned mn-server URL prefix as well as Firebase credentials. The default port for mn-frontend is 8088.
+5. Run `yarn install` in mn-frontend to install nodejs dependencies.
+6. Run `yarn dev` in mn-frontend to start the frontend application.
+7. Edit the `.env` file in mn-server for your MongoDB and IPFS connection information. The default port for mn-server is 3000.
+8. One time: create upload folder inside mn-server `mkdir -p uploads/albumSong`
+9. Run `yarn install` in mn-server to install nodejs dependencies.
+10. Run `yarn dev` in mn-server to start the backend application.
 
 ## License
 MIT license
